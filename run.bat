@@ -1,6 +1,6 @@
 @echo off
 :: run_admin.bat
-:: Script batch complet : admin + venv + pyautogui + run.py
+:: Script batch complet : admin + venv + install + run.py (avec SendInput)
 
 :: --- [1] Vérifier si lancé en admin ---
 NET SESSION >nul 2>&1
@@ -32,7 +32,14 @@ IF %ERRORLEVEL% NEQ 0 (
     echo pyautogui déjà installé.
 )
 
-:: --- [6] Lancer le script Python ---
+:: --- [6] Vérifier si ctypes est dispo (normalement inclus avec Python) ---
+python -c "import ctypes" 2>NUL
+IF %ERRORLEVEL% NEQ 0 (
+    echo ctypes introuvable ? (il devrait être inclus de base dans Python)
+)
+
+:: --- [7] Lancer ton script Python ---
+echo.
 echo Lancement de run.py...
 python run.py
 
